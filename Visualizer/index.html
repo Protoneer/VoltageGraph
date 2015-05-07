@@ -16,6 +16,10 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
     var socket = io();
+      socket.on('WelcomeMessage', function(msg){
+        console.log("Server said:"+msg);
+	socket.emit('WelcomeMessage', "Thanks")
+      });
   </script>
   <body>
     <ul id="messages"></ul>
