@@ -1,0 +1,9 @@
+{
+  "name": "VoltageGraph-UI",
+  "version": "0.0.1",
+  "description": "Voltage Graph",
+  "dependencies": {
+    "express": "^4.10.2",
+    "socket.io": "^1.3.5"
+  }
+}
