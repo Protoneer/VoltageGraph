@@ -4,27 +4,43 @@
     <title>VoltageGraph - Visualizer</title>
   </head>
   <script src="/socket.io/socket.io.js"></script>
+  <script src="smoothie.js"></script>
   <script>
+
+    var LINE1 = new TimeSeries();
+    var LINE2 = new TimeSeries();
+    var LINE3 = new TimeSeries();
+
+
+    function createTimeline() {
+      var chart1 = new SmoothieChart({minValue:0,maxValue:1024});
+      chart1.addTimeSeries(LINE1, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
+      chart1.streamTo(document.getElementById("chart1"), 100);
+
+      var chart2 = new SmoothieChart({minValue:0,maxValue:1024});
+      chart2.addTimeSeries(LINE2, { strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.2)', lineWidth: 4 });
+      chart2.streamTo(document.getElementById("chart2"), 100);
+
+      var chart3 = new SmoothieChart({minValue:0,maxValue:1024});
+      chart3.addTimeSeries(LINE3, { strokeStyle: 'rgba(0, 0, 2550, 1)', fillStyle: 'rgba(0, 0, 2550, 0.2)', lineWidth: 4 });
+      chart3.streamTo(document.getElementById("chart3"), 100);
+    }
+
+
+    // Web-socket related
     var socket = io();
-	
-	/*
-    socket.on('WelcomeMessage', function(msg){
-        console.log("Server said:"+msg);
-		socket.emit('WelcomeMessage', "Thanks")
-    });
-	*/
-	
     socket.on('serialData', function(data){
-		var dataJSON = JSON.parse(data);
-		for (i = 0; i < dataJSON["AVG"].length; i++) { 
-			console.log(dataJSON["AVG"][i]);
-		}
+      var dataJSON = JSON.parse(data);
+      LINE1.append(new Date().getTime(),dataJSON["AVG"][0]);
+      LINE2.append(new Date().getTime(),dataJSON["AVG"][1]);
+      LINE3.append(new Date().getTime(),dataJSON["AVG"][2]);
 
     });
 
-	
   </script>
-  <body>
-	
+  <body onload="createTimeline()" style="background-color:#333333">
+    <canvas id="chart1" width="1000" height="300"></canvas>
+    <canvas id="chart2" width="1000" height="300"></canvas>
+    <canvas id="chart3" width="1000" height="300"></canvas>
   </body>
 </html>

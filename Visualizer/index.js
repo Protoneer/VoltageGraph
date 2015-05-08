@@ -1,27 +1,22 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
+app.use(express.static('public'));
+
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-// List serial ports
-/*
-var serialPort = require('serialport');
-serialPort.list(function (err, ports) {
-  ports.forEach(function(port) {
-    console.log(port.comName);
-    console.log(port.pnpId);
-    console.log(port.manufacturer);
-  });
-});
-*/
 var serialport = require("serialport");
 var SerialPort = serialport.SerialPort;
 
-serialPort = new SerialPort("COM15", 
+
+serialPort = new SerialPort("/dev/ttyUSB0", 
 	{
 		baudrate: 115200,
 		parser: serialport.parsers.readline("\n")
 	}
 );
+
+
 serialPort.on("open", function () {
   console.log('open');
   serialPort.on('data', function(data) {
@@ -29,18 +24,12 @@ serialPort.on("open", function () {
     io.emit('serialData',data);
 
   });
-  /*
-  serialPort.write("ls\n", function(err, results) {
-    console.log('err ' + err);
-    console.log('results ' + results);
-  });
-  */
 });
-
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
+
 
 io.on('connection', function(socket){
   console.log('a user connected');
