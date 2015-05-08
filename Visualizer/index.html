@@ -15,8 +15,13 @@
 	*/
 	
     socket.on('serialData', function(data){
-        console.log("Serail Data:"+data);
+		var dataJSON = JSON.parse(data);
+		for (i = 0; i < dataJSON["AVG"].length; i++) { 
+			console.log(dataJSON["AVG"][i]);
+		}
+
     });
+
 	
   </script>
   <body>

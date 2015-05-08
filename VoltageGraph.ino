@@ -31,9 +31,9 @@ void loop() {
   }
   GetAVG();
   GetMinMax();
-  Serial.print("{\"MIN\":{\"LINE1\":" + (String)LINE1_min + ",\"LINE2\":" + (String)LINE2_min + ",\"REF\":" + (String)REF_min + "}");
-  Serial.print(",\"MAX\":{\"LINE1\":" + (String)LINE1_max + ",\"LINE2\":" + (String)LINE2_max + ",\"REF\":" + (String)REF_max + "}");
-  Serial.println(",\"AVG\":{\"LINE1\":" + (String)LINE1_avg + ",\"LINE2\":" + (String)LINE2_avg + ",\"REF\":" + (String)REF_avg + "}}");
+  Serial.print("{\"MIN\":["+(String)LINE1_min + "," + (String)LINE2_min + "," + (String)REF_min + "]");
+  Serial.print(",\"MAX\":["+(String)LINE1_max + "," + (String)LINE2_max + "," + (String)REF_max + "]");
+  Serial.println(",\"AVG\":["+(String)LINE1_avg + "," + (String)LINE2_avg + "," + (String)REF_avg + "]}");
 }
 
 
