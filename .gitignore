@@ -27,7 +27,7 @@
 *.out
 *.app
 
-/Visualizer/node_modules/*
 /.idea/*
 *.log
 *.js~
+/Visualizer/node_modules

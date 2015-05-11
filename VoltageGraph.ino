@@ -39,7 +39,7 @@ void loop() {
 
 void ReadPins(int index) {
   LINE1_Readings[index] = analogRead(LINE1);
-  LINE2_Readings[index] = analogRead(LINE1);
+  LINE2_Readings[index] = analogRead(LINE2);
   REF_Readings[index] = analogRead(REF_3V3);
 }
 
