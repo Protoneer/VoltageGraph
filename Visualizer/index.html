@@ -10,20 +10,35 @@
     var LINE1 = new TimeSeries();
     var LINE2 = new TimeSeries();
     var LINE3 = new TimeSeries();
+    var LINE4 = new TimeSeries();
+    var LINE5 = new TimeSeries();
+    var LINE6 = new TimeSeries();
 
 
     function createTimeline() {
       var chart1 = new SmoothieChart({minValue:0,maxValue:1024});
-      chart1.addTimeSeries(LINE1, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
+      chart1.addTimeSeries(LINE1, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 1 });
       chart1.streamTo(document.getElementById("chart1"), 100);
 
       var chart2 = new SmoothieChart({minValue:0,maxValue:1024});
-      chart2.addTimeSeries(LINE2, { strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.2)', lineWidth: 4 });
+      chart2.addTimeSeries(LINE2, { strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.2)', lineWidth: 1 });
       chart2.streamTo(document.getElementById("chart2"), 100);
 
       var chart3 = new SmoothieChart({minValue:0,maxValue:1024});
-      chart3.addTimeSeries(LINE3, { strokeStyle: 'rgba(0, 0, 2550, 1)', fillStyle: 'rgba(0, 0, 2550, 0.2)', lineWidth: 4 });
+      chart3.addTimeSeries(LINE3, { strokeStyle: 'rgba(0, 0, 2550, 1)', fillStyle: 'rgba(0, 0, 2550, 0.2)', lineWidth: 1 });
       chart3.streamTo(document.getElementById("chart3"), 100);
+
+      var chart4 = new SmoothieChart({minValue:0,maxValue:1024});
+      chart4.addTimeSeries(LINE4, { strokeStyle: 'rgba(0, 0, 2550, 1)', fillStyle: 'rgba(0, 0, 2550, 0.2)', lineWidth: 1 });
+      chart4.streamTo(document.getElementById("chart4"), 100);
+
+      var chart5 = new SmoothieChart({minValue:0,maxValue:1024});
+      chart5.addTimeSeries(LINE5, { strokeStyle: 'rgba(0, 0, 2550, 1)', fillStyle: 'rgba(0, 0, 2550, 0.2)', lineWidth: 1 });
+      chart5.streamTo(document.getElementById("chart5"), 100);
+
+      var chart6 = new SmoothieChart({minValue:0,maxValue:1024});
+      chart6.addTimeSeries(LINE6, { strokeStyle: 'rgba(0, 0, 2550, 1)', fillStyle: 'rgba(0, 0, 2550, 0.2)', lineWidth: 1 });
+      chart6.streamTo(document.getElementById("chart6"), 100);
     }
 
 
@@ -31,16 +46,40 @@
     var socket = io();
     socket.on('serialData', function(data){
       var dataJSON = JSON.parse(data);
-      LINE1.append(new Date().getTime(),dataJSON["AVG"][0]);
-      LINE2.append(new Date().getTime(),dataJSON["AVG"][1]);
-      LINE3.append(new Date().getTime(),dataJSON["AVG"][2]);
 
+      var ref = 3.3/dataJSON["AVG"][5];
+
+      LINE1.append(new Date().getTime(),dataJSON["AVG"][0]);
+      document.getElementById("Line1").innerHTML = Math.round(dataJSON["AVG"][0] * ref * 100) /100;
+
+      LINE2.append(new Date().getTime(),dataJSON["AVG"][1]);
+      document.getElementById("Line2").innerHTML = Math.round(dataJSON["AVG"][1] * ref * 100) /100;
+
+      LINE3.append(new Date().getTime(),dataJSON["AVG"][2]);
+      document.getElementById("Line3").innerHTML = Math.round(dataJSON["AVG"][2] * ref * 100) /100;
+
+      LINE4.append(new Date().getTime(),dataJSON["AVG"][3]);
+      document.getElementById("Line4").innerHTML = Math.round(dataJSON["AVG"][3] * ref * 100) /100;
+
+      LINE5.append(new Date().getTime(),dataJSON["AVG"][4]);
+      document.getElementById("Line5").innerHTML = Math.round(dataJSON["AVG"][4] * ref * 100) /100;
+
+      LINE6.append(new Date().getTime(),dataJSON["AVG"][5]);
     });
 
   </script>
   <body onload="createTimeline()" style="background-color:#333333">
-    <canvas id="chart1" width="1000" height="300"></canvas>
-    <canvas id="chart2" width="1000" height="300"></canvas>
-    <canvas id="chart3" width="1000" height="300"></canvas>
+    <a id="Line1">Line1</a><br>
+    <canvas id="chart1" width="1000" height="100"></canvas><br>
+    <a id="Line2">Line2</a><br>
+    <canvas id="chart2" width="1000" height="100"></canvas><br>
+    <a id="Line3">Line3</a><br>
+    <canvas id="chart3" width="1000" height="100"></canvas><br>
+    <a id="Line4">Line4</a><br>
+    <canvas id="chart4" width="1000" height="100"></canvas><br>
+    <a id="Line5">Line5</a><br>
+    <canvas id="chart5" width="1000" height="100"></canvas><br>
+    <a id="Ref">3.3V Ref</a><br>
+    <canvas id="chart6" width="1000" height="100"></canvas><br>
   </body>
 </html>
