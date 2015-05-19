@@ -14,6 +14,8 @@
     var LINE5 = new TimeSeries();
     var LINE6 = new TimeSeries();
 
+    var linemax = [0,0,0,0,0,0];
+
 
     function createTimeline() {
       var chart1 = new SmoothieChart({minValue:0,maxValue:1024});
@@ -51,35 +53,45 @@
 
       LINE1.append(new Date().getTime(),dataJSON["AVG"][0]);
       document.getElementById("Line1").innerHTML = Math.round(dataJSON["AVG"][0] * ref * 100) /100;
+      if(dataJSON["AVG"][0] > linemax[0]){linemax[0]=dataJSON["AVG"][0];};
+      document.getElementById("L1MAX").innerHTML = Math.round(linemax[0] * ref * 100) /100;
 
       LINE2.append(new Date().getTime(),dataJSON["AVG"][1]);
       document.getElementById("Line2").innerHTML = Math.round(dataJSON["AVG"][1] * ref * 100) /100;
+      if(dataJSON["AVG"][1] > linemax[1]){linemax[1]=dataJSON["AVG"][1];};
+      document.getElementById("L2MAX").innerHTML = Math.round(linemax[1] * ref * 100) /100;
 
       LINE3.append(new Date().getTime(),dataJSON["AVG"][2]);
       document.getElementById("Line3").innerHTML = Math.round(dataJSON["AVG"][2] * ref * 100) /100;
+      if(dataJSON["AVG"][2] > linemax[2]){linemax[2]=dataJSON["AVG"][2];};
+      document.getElementById("L3MAX").innerHTML = Math.round(linemax[2] * ref * 100) /100;
 
       LINE4.append(new Date().getTime(),dataJSON["AVG"][3]);
       document.getElementById("Line4").innerHTML = Math.round(dataJSON["AVG"][3] * ref * 100) /100;
+      if(dataJSON["AVG"][3] > linemax[3]){linemax[3]=dataJSON["AVG"][3];};
+      document.getElementById("L4MAX").innerHTML = Math.round(linemax[3] * ref * 100) /100;
 
       LINE5.append(new Date().getTime(),dataJSON["AVG"][4]);
       document.getElementById("Line5").innerHTML = Math.round(dataJSON["AVG"][4] * ref * 100) /100;
+      if(dataJSON["AVG"][4] > linemax[4]){linemax[4]=dataJSON["AVG"][4];};
+      document.getElementById("L5MAX").innerHTML = Math.round(linemax[4] * ref * 100) /100;
 
       LINE6.append(new Date().getTime(),dataJSON["AVG"][5]);
     });
 
   </script>
-  <body onload="createTimeline()" style="background-color:#333333">
-    <a id="Line1">Line1</a><br>
+  <body onload="createTimeline()" style="background-color:#FFFFFF">
+    <a id="Line1">Line1</a><a>(TX) Max=</a><a id="L1MAX"></a><br>
     <canvas id="chart1" width="1000" height="100"></canvas><br>
-    <a id="Line2">Line2</a><br>
+    <a id="Line2">Line2</a><a>(RX) Max=</a><a id="L2MAX"></a><br>
     <canvas id="chart2" width="1000" height="100"></canvas><br>
-    <a id="Line3">Line3</a><br>
+    <a id="Line3">Line3</a><a>(SDA) Max=</a><a id="L3MAX"></a><br>
     <canvas id="chart3" width="1000" height="100"></canvas><br>
-    <a id="Line4">Line4</a><br>
+    <a id="Line4">Line4</a><a>(SCL) Max=</a><a id="L4MAX"></a><br>
     <canvas id="chart4" width="1000" height="100"></canvas><br>
-    <a id="Line5">Line5</a><br>
+    <a id="Line5">Line5</a><a>(#4) Max=</a><a id="L5MAX"></a><br>
     <canvas id="chart5" width="1000" height="100"></canvas><br>
-    <a id="Ref">3.3V Ref</a><br>
+    <a id="Ref">3.3V Ref</a><a></a><br>
     <canvas id="chart6" width="1000" height="100"></canvas><br>
   </body>
 </html>
